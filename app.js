@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const date = require(__dirname + "/date.js");
@@ -15,7 +16,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(express.static("public"));
-const url="mongodb+srv://vikassharma20015:1vikas%4023@cluster0.3lntimk.mongodb.net/todolistDB"
+const url=process.env.URL;
 mongoose.connect(url);
 const itemsSchema = new mongoose.Schema({
   name: {
@@ -54,8 +55,7 @@ app.get("/", function(req, res) {
           } else {
             console.log("Successfully inserted items");
           }
-        })
-        ITEM.save();
+        });
       }
     }
     res.render("list", {
